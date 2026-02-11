@@ -1,0 +1,25 @@
+{
+  "name": "recipe-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "ssg": "npx nuxt generate && http-server .output/public -p 8080",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.6.2",
+    "http-server": "^14.1.1",
+    "nuxt": "^3.16.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@nuxt/content": "^3.0.0",
+    "@nuxtjs/tailwindcss": "^6.13.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "typescript": "^5.7.0"
+  }
+}
