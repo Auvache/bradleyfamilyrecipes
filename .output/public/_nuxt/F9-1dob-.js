@@ -1,1 +1,0 @@
-import{_ as s,o,c as r,z as t}from"./Bott7vdE.js";const n={};function c(e,a){return o(),r("td",null,[t(e.$slots,"default")])}const l=Object.assign(s(n,[["render",c]]),{__name:"ProseTd"});export{l as default};
