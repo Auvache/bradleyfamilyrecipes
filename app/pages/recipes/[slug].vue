@@ -75,7 +75,7 @@ useHead({
             <circle cx="12" cy="12" r="10" />
             <polyline points="12 6 12 12 16 14" />
           </svg>
-          <span><strong>Time:</strong> {{ recipe.time }} min</span>
+          <span><strong>Time:</strong> {{ formatTime(recipe.time) }}</span>
         </div>
 
         <!-- Divider -->
