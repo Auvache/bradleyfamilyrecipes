@@ -178,7 +178,7 @@ colors: {
 
 ### Changing fonts
 
-The site uses **Inter** (body) and **Playfair Display** (headings) via Google Fonts, loaded in `nuxt.config.ts`. Swap the font URLs and update the `fontFamily` in `tailwind.config.ts`.
+The site uses the **system font stack** (`-apple-system` / SF Pro on Apple devices), set as `fontFamily.sans` in `tailwind.config.ts`. There is no webfont request — nothing to load, nothing to block rendering. To use a webfont instead, add the `<link>` to `nuxt.config.ts` and update `fontFamily` there.
 
 ### Adding new frontmatter fields
 
@@ -188,20 +188,20 @@ The site uses **Inter** (body) and **Playfair Display** (headings) via Google Fo
 
 ---
 
-## Deploying to Cloudflare Pages
+## Building
+
+**Requires Node 22** — `better-sqlite3` (a `@nuxt/content` dependency) publishes
+prebuilt binaries only through Node 25, and the source compile fails on newer
+versions. `.nvmrc` pins this.
 
 ```bash
-# Generate the static site
-npm run generate
-
-# The output is in .output/public/
-# Point Cloudflare Pages to this directory
+nvm use          # reads .nvmrc
+npm ci
+npm run generate # output lands in .output/public
+npx serve .output/public
 ```
 
-**Cloudflare Pages settings:**
-- Build command: `npm run generate`
-- Build output directory: `.output/public`
-- Node.js version: 18+
+`.output/` is generated and not committed — build it wherever you deploy from.
 
 ---
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// SEO
 useHead({
   title: 'Home',
   meta: [
@@ -7,34 +6,29 @@ useHead({
   ],
 })
 
-// Fetch all recipes
 const { data: recipes } = await useAsyncData('recipes', () =>
   queryCollection('recipes').order('title', 'ASC').all()
 )
 
-// Active filter state
-const activeCategory = ref<string | null>(null)
+const query = ref('')
 
-// Extract unique tags from all recipes
-const allCategories = computed(() => {
-  if (!recipes.value) return []
-  const tagSet = new Set<string>()
-  for (const recipe of recipes.value) {
-    for (const tag of recipe.tags) {
-      tagSet.add(tag)
-    }
-  }
-  return [...tagSet].sort()
-})
+function normalize(s: string): string {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
 
-// Filtered recipes
+// Every keystroke re-runs this computed. An empty query shows everything.
 const filteredRecipes = computed(() => {
-  if (!recipes.value) return []
-  if (!activeCategory.value) return recipes.value
-  return recipes.value.filter((r) => r.tags.includes(activeCategory.value!))
+  const all = recipes.value ?? []
+  const terms = normalize(query.value).split(/\s+/).filter(Boolean)
+  if (!terms.length) return all
+
+  return all.filter((recipe) => {
+    const haystack = normalize([recipe.title, ...recipe.tags].join(' '))
+    // Every term has to land somewhere, so "chicken soup" narrows rather than widens.
+    return terms.every((term) => haystack.includes(term))
+  })
 })
 
-// Extract slug from path (e.g., "/recipes/tomato-basil-pasta" → "tomato-basil-pasta")
 function getSlug(path: string): string {
   return path.split('/').pop() || ''
 }
@@ -42,50 +36,66 @@ function getSlug(path: string): string {
 
 <template>
   <div>
-    <!-- Hero Section -->
-    <section class="bg-slate-600">
-      <div class="max-w-6xl mx-auto px-4 pt-12 pb-8">
-        <h1 class="text-4xl md:text-5xl text-white mb-8">
+    <!-- Hero -->
+    <section class="px-6 pt-20 pb-12 md:pt-28 md:pb-16">
+      <div class="max-w-shell mx-auto text-center">
+        <h1 class="text-[40px] md:text-[56px] leading-[1.05] font-semibold tracking-tightest text-ink">
           Bradley Family Recipes
         </h1>
+        <p class="mt-4 text-[19px] md:text-[21px] text-ink-soft tracking-apple max-w-xl mx-auto">
+          The ones we actually cook. Handed down, written down, kept here.
+        </p>
 
-        <!-- Category Filters -->
-        <CategoryFilter
-          :categories="allCategories"
-          :active-category="activeCategory"
-          @select="activeCategory = $event"
-        />
+        <div class="mt-10 max-w-xl mx-auto">
+          <SearchBar v-model="query" />
+        </div>
       </div>
     </section>
 
-    <!-- Recipe Grid -->
-    <section class="max-w-6xl mx-auto px-4 py-10">
-      <!-- Results count -->
-      <p class="text-sm text-gray-400 mb-6">
-        {{ filteredRecipes.length }} recipe{{ filteredRecipes.length === 1 ? '' : 's' }}
-        <span v-if="activeCategory"> tagged "{{ activeCategory }}"</span>
-      </p>
+    <!-- Grid -->
+    <section class="px-6 pb-8">
+      <div class="max-w-shell mx-auto">
+        <p class="text-[13px] text-ink-faint mb-6 h-5" aria-live="polite">
+          <template v-if="query">
+            {{ filteredRecipes.length }}
+            {{ filteredRecipes.length === 1 ? 'result' : 'results' }} for &ldquo;{{ query }}&rdquo;
+          </template>
+          <template v-else>
+            {{ filteredRecipes.length }} recipes
+          </template>
+        </p>
 
-      <!-- Grid -->
-      <div
-        v-if="filteredRecipes.length"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-      >
-        <RecipeCard
-          v-for="recipe in filteredRecipes"
-          :key="recipe.path"
-          :title="recipe.title"
-          :image="recipe.image"
-          :time="recipe.time"
-          :tags="recipe.tags"
-          :slug="getSlug(recipe.path)"
-        />
-      </div>
+        <div
+          v-if="filteredRecipes.length"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10"
+        >
+          <RecipeCard
+            v-for="recipe in filteredRecipes"
+            :key="recipe.path"
+            :title="recipe.title"
+            :image="recipe.image"
+            :time="recipe.time"
+            :tags="recipe.tags"
+            :slug="getSlug(recipe.path)"
+          />
+        </div>
 
-      <!-- Empty state -->
-      <div v-else class="text-center py-16">
-        <p class="text-5xl mb-4">🍽️</p>
-        <p class="text-gray-400 text-lg">No recipes found for this category.</p>
+        <!-- Empty state -->
+        <div v-else class="text-center py-24">
+          <p class="text-[21px] font-semibold tracking-apple text-ink">
+            No recipes found
+          </p>
+          <p class="mt-2 text-[17px] text-ink-soft">
+            Try a different ingredient, dish, or tag.
+          </p>
+          <button
+            type="button"
+            class="mt-6 text-[15px] text-accent-500 hover:underline underline-offset-4"
+            @click="query = ''"
+          >
+            Clear search
+          </button>
+        </div>
       </div>
     </section>
   </div>

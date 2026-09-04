@@ -3,11 +3,61 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    font-weight: 300;
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
-  
-  h1 {
-    font-weight: 700;
+
+  body {
+    @apply bg-white text-ink antialiased;
+    font-weight: 400;
+    /* Apple sets body copy at 17px, not 16px. */
+    font-size: 17px;
+    line-height: 1.47059;
+    letter-spacing: -0.022em;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Large type gets tighter tracking, the way Apple's headlines do. */
+  h1, h2, h3 {
+    @apply font-semibold tracking-tightest text-ink;
+  }
+
+  /* Keyboard focus only — matches Apple's blue focus ring. */
+  :focus-visible {
+    outline: 2px solid theme('colors.accent.500');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: theme('colors.accent.100');
+    color: theme('colors.ink.DEFAULT');
+  }
+
+  /* Strip the native search decorations so the field reads as one clean pill. */
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+@layer utilities {
+  /* Apple's frosted-glass chrome. */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

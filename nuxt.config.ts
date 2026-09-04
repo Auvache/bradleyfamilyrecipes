@@ -38,6 +38,7 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'Bradley Family Recipes' },
         { property: 'og:description', content: 'Bradley Family Recipes - Our collection of favorite family recipes including German schnitzel, Puerto Rican rice dishes, comfort food soups, and more.' },
         { property: 'og:type', content: 'website' },
+        { name: 'theme-color', content: '#ffffff' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -45,12 +46,6 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Lexend:wght@300;700&display=swap',
-        },
       ],
     },
   },

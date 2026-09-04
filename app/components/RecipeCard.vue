@@ -11,57 +11,30 @@ defineProps<Props>()
 </script>
 
 <template>
-  <NuxtLink
-    :to="`/recipes/${slug}`"
-    class="group block bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden"
-  >
-    <!-- Image -->
-    <div class="aspect-[4/3] overflow-hidden">
+  <NuxtLink :to="`/recipes/${slug}`" class="group block">
+    <!-- Image sits on the gray, corners rounded, no card chrome. -->
+    <div class="relative aspect-[4/3] overflow-hidden rounded-apple bg-surface-gray">
       <img
         :src="image"
         :alt="title"
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        class="w-full h-full object-cover transition-transform duration-[600ms] ease-apple group-hover:scale-[1.04]"
         loading="lazy"
+        decoding="async"
       />
+      <!-- Hairline keeps pale photos from bleeding into the page. -->
+      <div class="absolute inset-0 rounded-apple ring-1 ring-inset ring-black/[0.06]" />
     </div>
 
-    <!-- Content -->
-    <div class="p-4 flex flex-col gap-2">
-      <h3 class="font-semibold text-gray-900 text-lg leading-snug group-hover:text-accent-600 transition-colors">
+    <div class="mt-4">
+      <h3 class="text-[19px] font-semibold tracking-apple text-ink leading-snug transition-colors duration-300 ease-apple group-hover:text-accent-500">
         {{ title }}
       </h3>
 
-      <!-- Footer: time + tags -->
-      <div class="flex items-center justify-between gap-3 mt-2 pt-3 border-t border-gray-100">
-        <!-- Time -->
-        <div class="flex items-center gap-1.5 text-sm text-gray-400 shrink-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-4 h-4"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          <span>{{ formatTime(time) }}</span>
-        </div>
-
-        <!-- Tags -->
-        <div class="flex flex-wrap justify-end gap-1.5">
-          <span
-            v-for="tag in tags"
-            :key="tag"
-            class="px-2.5 py-0.5 text-xs font-medium bg-gray-100 text-gray-600 rounded-full"
-          >
-            {{ tag }}
-          </span>
-        </div>
-      </div>
+      <p class="mt-1.5 text-[14px] text-ink-soft tracking-apple">
+        {{ formatTime(time) }}
+        <span class="text-ink-faint px-1.5" aria-hidden="true">&middot;</span>
+        <span class="capitalize">{{ tags.join(', ') }}</span>
+      </p>
     </div>
   </NuxtLink>
 </template>

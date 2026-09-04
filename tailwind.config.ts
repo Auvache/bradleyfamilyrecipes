@@ -8,21 +8,56 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Lexend', 'system-ui', 'sans-serif'],
+        // Apple's own stack — resolves to SF Pro on Apple devices, graceful elsewhere.
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"SF Pro Display"',
+          '"SF Pro Text"',
+          '"Helvetica Neue"',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+        ],
       },
       colors: {
-        accent: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
+        // Apple's neutrals
+        ink: {
+          DEFAULT: '#1d1d1f',
+          soft: '#6e6e73',
+          faint: '#86868b',
         },
+        surface: {
+          DEFAULT: '#ffffff',
+          gray: '#f5f5f7',
+          subtle: '#fbfbfd',
+        },
+        accent: {
+          50: '#e8f2fd',
+          100: '#d1e5fb',
+          200: '#a3ccf7',
+          300: '#6bb0f2',
+          400: '#2f92ec',
+          500: '#0071e3',
+          600: '#0077ed',
+          700: '#0059b3',
+          800: '#004085',
+          900: '#002a58',
+        },
+      },
+      letterSpacing: {
+        tightest: '-0.025em',
+        apple: '-0.015em',
+      },
+      borderRadius: {
+        apple: '18px',
+        card: '12px',
+      },
+      transitionTimingFunction: {
+        apple: 'cubic-bezier(0.28, 0.11, 0.32, 1)',
+      },
+      maxWidth: {
+        shell: '1024px',
       },
     },
   },
