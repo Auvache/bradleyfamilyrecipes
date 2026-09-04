@@ -26,6 +26,16 @@ export default defineNuxtConfig({
         highlight: false,
       },
     },
+
+    // Back the build-time content DB with Node's built-in `node:sqlite`
+    // instead of the better-sqlite3 native addon. better-sqlite3 12.x cannot
+    // compile on Node 26+ (it calls v8::PropertyCallbackInfo::This(), removed
+    // in V8 14), and even on older Node its prebuilt binary is ABI-locked to
+    // one major version. node:sqlite is unflagged from Node 24 on, so the
+    // build no longer cares which Node runs it.
+    experimental: {
+      sqliteConnector: 'native',
+    },
   },
 
   app: {
