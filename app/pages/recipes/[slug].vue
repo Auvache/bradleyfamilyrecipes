@@ -35,9 +35,9 @@ useHead({
       </div>
     </header>
 
-    <!-- Full-bleed image on the gray -->
+    <!-- Image, matched to the body width -->
     <div class="px-6">
-      <div class="max-w-shell mx-auto">
+      <div class="max-w-[680px] mx-auto">
         <div class="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-surface-gray">
           <img
             :src="recipe.image"
@@ -51,7 +51,7 @@ useHead({
     </div>
 
     <!-- Body -->
-    <article class="px-6 pt-16">
+    <article class="px-6 pt-0 md:pt-16">
       <div
         class="max-w-[680px] mx-auto
                prose prose-neutral

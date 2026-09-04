@@ -36,24 +36,17 @@ function getSlug(path: string): string {
 
 <template>
   <div>
-    <!-- Hero -->
-    <section class="px-6 pt-20 pb-12 md:pt-28 md:pb-16">
-      <div class="max-w-shell mx-auto text-center">
-        <h1 class="text-[40px] md:text-[56px] leading-[1.05] font-semibold tracking-tightest text-ink">
-          Bradley Family Recipes
-        </h1>
-        <p class="mt-4 text-[19px] md:text-[21px] text-ink-soft tracking-apple max-w-xl mx-auto">
-          The ones we actually cook. Handed down, written down, kept here.
-        </p>
-
-        <div class="mt-10 max-w-xl mx-auto">
+    <!-- Search -->
+    <section class="px-6 pt-10 pb-8 md:pt-14 md:pb-10">
+      <div class="max-w-shell mx-auto">
+        <div class="max-w-xl mx-auto">
           <SearchBar v-model="query" />
         </div>
       </div>
     </section>
 
     <!-- Grid -->
-    <section class="px-6 pb-8">
+    <section class="px-6">
       <div class="max-w-shell mx-auto">
         <p class="text-[13px] text-ink-faint mb-6 h-5" aria-live="polite">
           <template v-if="query">

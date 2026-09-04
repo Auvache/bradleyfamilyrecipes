@@ -8,22 +8,14 @@
           to="/"
           class="text-[15px] font-medium tracking-apple text-ink hover:text-ink-soft transition-colors duration-300 ease-apple"
         >
-          Bradley Family Recipes
+          Feed the Bradleys
         </NuxtLink>
       </nav>
     </header>
 
-    <main class="flex-1">
+    <main class="flex-1 pb-8">
       <slot />
     </main>
 
-    <!-- Footer: Apple's is quiet, small, and sits on the gray -->
-    <footer class="bg-surface-gray border-t border-black/5 mt-24">
-      <div class="max-w-shell mx-auto px-6 py-8">
-        <p class="text-xs text-ink-faint leading-relaxed">
-          Made at home, with good ingredients.
-        </p>
-      </div>
-    </footer>
   </div>
 </template>
