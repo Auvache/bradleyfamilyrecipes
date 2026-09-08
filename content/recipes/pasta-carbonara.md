@@ -3,6 +3,7 @@ title: Pasta Carbonara
 image: /images/pasta-carbonara.jpeg
 time: 25
 tags:
+  - quick meal
   - pasta
 ---
 

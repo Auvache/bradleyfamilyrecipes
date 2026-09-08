@@ -4,7 +4,7 @@ image: /images/zuppa-toscana.jpg
 time: 480
 tags:
   - soup
-  - slow cooker
+  - crockpot
   - Italian
 ---
 
